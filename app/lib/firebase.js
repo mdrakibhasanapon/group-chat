@@ -11,6 +11,6 @@ const firebaseConfig = {
   appId:             process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 }
 
-// Prevent re-initialising on hot reload
+// Prevent re-initialising on hot reload; skip DB init during SSR builds
 const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig)
-export const db = getDatabase(app)
+export const db = typeof window !== 'undefined' ? getDatabase(app) : null
